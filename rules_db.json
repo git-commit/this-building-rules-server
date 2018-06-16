@@ -1,0 +1,17 @@
+{
+  "rules": [
+    {
+      "id": 42,
+      "conditions": [
+        {
+          "stateId": "inside.temperature",
+          "type": "higher",
+          "value": 25
+        }
+      ],
+      "actions": [
+        "open_window"
+      ]
+    }
+  ]
+}

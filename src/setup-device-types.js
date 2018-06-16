@@ -10,18 +10,18 @@ var headers = {
 }
 
 var body = {
-  'name': 'Temperature Sensor',
+  'name': 'Presence sensor',
   'manufacturer': 'TBR',
   'model': 'V1',
-  'description': 'A simple temperature sensor',
+  'description': 'Detects people inside the room',
   'reportingRules': [{
-    'path': '$.attributes.temperature',
+    'path': '$.attributes.numberOfPeople',
     'reportTo': ['timeseries']
   }],
   'schema': {
     'attributes': {
-      'temperature': {
-        'type': 'number'
+      'numberOfPeople': {
+        'type': 'integer'
       }
     }
   }
