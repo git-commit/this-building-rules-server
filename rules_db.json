@@ -7,6 +7,11 @@
           "stateId": "inside.temperature",
           "type": "higher",
           "value": 25
+        },
+        {
+          "stateId": "inside.humans",
+          "type": "higher",
+          "value": 0
         }
       ],
       "actions": [

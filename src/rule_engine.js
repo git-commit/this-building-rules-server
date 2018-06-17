@@ -1,5 +1,6 @@
 const shortid = require('shortid')
 const ruledb = require('./db/rule')
+const act = require('./actions')
 
 function createRule (conditions, actions) {
   return {
@@ -18,10 +19,10 @@ function createCondition (stateId, type, value) {
   }
 }
 
-const stateIds = ['inside.temperature', 'inside.humidity', 'inside.co2', 'outside.humidity', 'outside.temperature']
+const stateIds = ['inside.temperature', 'inside.humidity', 'inside.co2', 'outside.humidity', 'outside.temperature', 'inside.humans', 'assistant']
 const conditionNames = ['temperature']
 const typeNames = ['lower', 'equal', 'higher']
-const actionNames = ['open_window', 'close_window']
+const actionNames = ['open_window', 'close_window', 'led_on', 'led_off']
 
 function getConditionValue (condition, state) {
   const paths = condition.stateId.split('.')
@@ -30,31 +31,34 @@ function getConditionValue (condition, state) {
   return value
 }
 
-function ruleApplies (rule, state) {
+function ruleDoesNotApply (rule, state) {
   rule.conditions.filter(c => {
     const value = getConditionValue(c, state)
 
     if (c.type === 'lower') {
-      return value < c.value
+      return value && c.value <= value
     }
     if (c.type === 'equals') {
-      return value === c.value
+      return value && value !== c.value
     }
     if (c.type === 'higher') {
-      return value > c.value
+      return value && c.value >= value
     }
   })
 }
 
 function checkRules (state) {
   ruledb.getAllRules()
-    .filter(r => !ruleApplies(r, state))
+    .filter(r => ruleDoesNotApply(r, state))
     .forEach(r => r.actions.forEach(a => actions[a]()))
 }
 
 const actions = {
   open_window: function () {
-    console.log('works')
+    act.changeWindow(true)
+  },
+  close_window: function () {
+    act.changeWindow(false)
   }
 }
 
