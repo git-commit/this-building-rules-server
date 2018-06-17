@@ -4,18 +4,26 @@
       "id": 42,
       "conditions": [
         {
-          "stateId": "inside.temperature",
+          "stateId": "inside.humidity",
           "type": "higher",
-          "value": 25
-        },
-        {
-          "stateId": "inside.humans",
-          "type": "higher",
-          "value": 0
+          "value": 60
         }
       ],
       "actions": [
         "open_window"
+      ]
+    },
+    {
+      "id": 43,
+      "conditions": [
+        {
+          "stateId": "inside.humans",
+          "type": "equals",
+          "value": 0
+        }
+      ],
+      "actions": [
+        "close_window"
       ]
     }
   ]

@@ -18,6 +18,7 @@ function changeWindow (open) {
     .patch(url)
     .set(headers)
     .send({'custom': {'open': open}})
+    .then((res) => console.log(res.body))
 }
 
 function changeLED (on) {

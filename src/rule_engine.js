@@ -30,26 +30,36 @@ function getConditionValue (condition, state) {
   return value
 }
 
-function ruleDoesNotApply (rule, state) {
-  rule.conditions.filter(c => {
+function ruleDoesApply (rule, state) {
+  const validConditions = rule.conditions.filter(c => {
     const value = getConditionValue(c, state)
 
+    if (value == null) {
+      console.log('NULL')
+      return false
+    }
+
     if (c.type === 'lower') {
-      return value && c.value <= value
+      return value <= c.value
     }
     if (c.type === 'equals') {
-      return value && value !== c.value
+      return value === c.value
     }
     if (c.type === 'higher') {
-      return value && c.value >= value
+      return c.value <= value
     }
   })
+
+  return validConditions.length === rule.conditions.length
 }
 
 function checkRules (state) {
   ruledb.getAllRules()
-    .filter(r => ruleDoesNotApply(r, state))
-    .forEach(r => r.actions.forEach(a => actions[a]()))
+    .filter(r => ruleDoesApply(r, state))
+    .forEach(r => {
+      console.log(r)
+      r.actions.forEach(a => actions[a]())
+    })
 }
 
 const actions = {
