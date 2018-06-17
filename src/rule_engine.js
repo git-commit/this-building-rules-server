@@ -20,7 +20,6 @@ function createCondition (stateId, type, value) {
 }
 
 const stateIds = ['inside.temperature', 'inside.humidity', 'inside.co2', 'outside.humidity', 'outside.temperature', 'inside.humans', 'assistant']
-const conditionNames = ['temperature']
 const typeNames = ['lower', 'equal', 'higher']
 const actionNames = ['open_window', 'close_window', 'led_on', 'led_off']
 
@@ -62,4 +61,4 @@ const actions = {
   }
 }
 
-module.exports = {createCondition, createRule, stateIds, conditionNames, typeNames, actionNames, checkRules}
+module.exports = {createCondition, createRule, stateIds, typeNames, actionNames, checkRules}

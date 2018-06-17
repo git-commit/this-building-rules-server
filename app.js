@@ -1,6 +1,8 @@
 const config = require('config')
 const request = require('superagent')
 const ruleEngine = require('./src/rule_engine')
+const db = require('./src/db/rule')
+const cors = require('cors')
 
 var apiUrl = 'https://api.preview.oltd.de/v1/users/' + config.olt.osram_id + '/tenants'
 
@@ -24,7 +26,7 @@ var state = {
     co2: null,
     temperature: null,
     humidity: null,
-    humans: -1
+    humans: null
   },
   outside: {
     temperature: null,
@@ -72,4 +74,23 @@ function updateState () {
     })
 }
 
-setInterval(updateState, 5000)
+setInterval(updateState, 500)
+
+// express api routing
+const express = require('express')
+var app = express()
+app.use(cors())
+
+app.get('/', function (req, res) {
+  res.send({
+    state: state,
+    stateIds: ruleEngine.stateIds,
+    typeNames: ruleEngine.typeNames,
+    actionNames: ruleEngine.actionNames,
+    rules: db.getAllRules()
+  })
+})
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!')
+})
