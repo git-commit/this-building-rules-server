@@ -20,6 +20,11 @@
           "stateId": "inside.humans",
           "type": "equals",
           "value": 0
+        },
+        {
+          "stateId": "time",
+          "type": "higher",
+          "value": "5"
         }
       ],
       "actions": [

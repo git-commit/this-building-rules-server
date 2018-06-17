@@ -21,6 +21,7 @@ request.get(apiUrl)
   })
 
 var state = {
+  time: 8,
   assistant: null,
   inside: {
     co2: null,
@@ -89,6 +90,11 @@ app.get('/', function (req, res) {
     actionNames: ruleEngine.actionNames,
     rules: db.getAllRules()
   })
+})
+
+app.get('/hack-time', function (req, res) {
+  state.time = 18
+  res.send({"Success": "Yay"})
 })
 
 app.listen(3000, function () {
